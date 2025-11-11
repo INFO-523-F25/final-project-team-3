@@ -22,39 +22,57 @@ jupyter: python3
 
 ## Questions
 
-Are there archetypes/ personality groups of listeners that can be identified?
-Is there some less popular / less well known music that could be more widely appreciated if the right people were exposed to it?
+Can we identify distinct groups of artists who are enjoyed by similar listeners?
+
+Can we predict which songs a user is likely to add to their playlist based on their listening history and similar users’ behavior?
+
+    Engineered fields: Song popularity (Number of times a song appears across all playlists) and Collaborative similarity index (Overlap in playlist content between users)
+
+Can we predict whether a song will be added to a playlist , based on the song elements (key, tempo, genre, and loudness) of the songs that already exist in the playlist?
+
 
 ## High level goal and expanded description
-The goal is to build a music recommender system based on user's listening habits. This algorithm could serve to help listeners to find new music that they might enjoy, and also could help artists by exposing them to listeners that may enjoy their music.
+The goal is to build a music recommender system based on users' listening habits. This algorithm could serve to help listeners to find new music that they might enjoy, and also could help artists by exposing them to listeners that may enjoy their music.
+
 
 ## Data and motivation
 This dataset is based on the subset of users in the #nowplaying dataset who publish their #nowplaying tweets via Spotify. In principle, the dataset holds users, their playlists and the tracks contained in these playlists.
-https://www.kaggle.com/datasets/andrewmvd/spotify-playlists
 
-The goal is to build a music recommender system based on users' listening habits. This algorithm could serve to help listeners to find new music that they might enjoy, and also could help artists by exposing them to listeners that may enjoy their music.
+User Data Source: https://www.kaggle.com/datasets/andrewmvd/spotify-playlists
 
-The dataset contains the following columns:
+Music Metadata Source: https://www.kaggle.com/datasets/devdope/900k-spotify/data
+
+User Data Source: contains the following columns:
 "user_id", "artistname", "trackname", "playlistname"
 - user_id is a hash of the user's Spotify user name
 - artistname is the name of the artist
 - trackname is the title of the track and
 - playlistname is the name of the playlist that contains this track.
 
-This data does not contain features / tags describing the characteristics of the songs. The approach would be to identify similar listening habits among certain people and recommend music that similar listeners enjoy. This could be in the form of a collaborative filtering algorigthm.
+The User Data Source does not contain features / tags describing the characteristics of the songs. One approach would be to identify similar listening habits among certain people and recommend music that similar listeners enjoy. This could be in the form of a collaborative filtering algorigthm.
+
+The Music Metadata contains additional features about the songs including lyrical text, song length, emotion and genre, which could be more conducive to a content filtering approach
+
+For this project, graph (network) visuals may be helpful to see clusters of listeners with similar listening habits. Once we are familiar with the data we will begin preprocessing, followed by testing and refining different algorithms. 
+
 
 ## Weekly "plan of attack"
-For this project, graph (network) visuals may be helpful to see clusters of listeners with similar listening habits. Once we are familiar with the data we will begin preprocessing, followed by testing and refining different algorithms. 
 
 Schedule may be updated as project progresses
 
-- 10/26 - Decide on project and put together proposal
-- 11/2 - Explore / visualize and understand the data
-- 11/9 - Clean and prepare the data
-- 11/16 - Try different algorithms and hyperparameter tuning
-- 11/23 - Continue refining algorithms / hyperparameters
-- 11/30 - Refine final model
-- 12/7 - Recap and presentation
+10/26 - Decide on project and put together proposal. Initial data exploration and identify research questions.
+
+11/2 - Explore / visualize and understand the data. Summarize the data using histograms and summary tables. Visualize the network of listening habits in a graph.
+
+11/9 - Clean and prepare the data. Remove or replace null values. Identify and remove unnecessary features. Normalize/ standardize the features.
+
+11/16 - Try different algorithms and hyperparameter tuning. For this project both a collaborative filtering and a content filtering approach can be explored. The predictions can be tested by removing songs from users’ playlist, and seeing if the algorithm scored those songs highly for those users.
+
+11/23 - Continue refining algorithms / hyperparameters. Use a hyperparameter tuning framework, and verify that the model is performing as well as possible without overfitting.
+
+11/30 - Refine and validate the model further. Begin to frame project findings into a story corresponding to the research questions.
+
+12/7 - Recap and presentation. Assemble quarto file and visuals. Record the presentation 
 
 
 ## Repository structure and folder `README.md` files
