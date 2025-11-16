@@ -1,2 +1,8 @@
 jupyter
 nbformat
+kagglehub
+pandas
+numpy
+matplotlib
+seaborn
+plotly
