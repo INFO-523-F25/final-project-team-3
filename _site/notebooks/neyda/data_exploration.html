@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>data_exploration – Project Title</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0d4a9d19931feb4fee1ddab4b2489000.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Project Title</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Project</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../proposal.html"> 
+<span class="menu-text">Proposal</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../presentation.html"> 
+<span class="menu-text">Presentation</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/INFO-523-SU24/final-project"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<div id="33fb1c57" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GroupKFold, train_test_split</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># set display options</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="va">None</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="e6f7cb14" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'../../data/spotify_dataset.csv'</span>, on_bad_lines<span class="op">=</span><span class="st">'skip'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#df.columns=["user","artist","track","playlist"]</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(columns<span class="op">=</span>df.columns[<span class="dv">4</span>:<span class="dv">124</span>])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.read_csv(<span class="st">'../../data/additional_spotify_dataset.csv'</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df2.drop(columns<span class="op">=</span>df2.columns[<span class="dv">39</span>:<span class="dv">658</span>])</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="b8ac8ad5" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.describe())</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df.info()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df2.describe())</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df2.info()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#df</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#df2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                 user_id   artistname trackname playlistname
+count                            1048575      1046373   1048566      1048501
+unique                              1561        68568    386261        18328
+top     61baddf7207fea410abdc56e680fa869  Johnny Cash     Intro      Starred
+freq                               18901         3458       557        94581
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 1048575 entries, 0 to 1048574
+Data columns (total 4 columns):
+ #   Column        Non-Null Count    Dtype 
+---  ------        --------------    ----- 
+ 0   user_id       1048575 non-null  object
+ 1   artistname    1046373 non-null  object
+ 2   trackname     1048566 non-null  object
+ 3   playlistname  1048501 non-null  object
+dtypes: object(4)
+memory usage: 32.0+ MB
+                                   Artist(s)  \
+count                                 551479   
+unique                                127368   
+top     Victor J Sefo,Lisi,Mwayz,Sefos.Beats   
+freq                                    1603   
+
+                                              song  \
+count                                       551462   
+unique                                      317908   
+top     The Chinese Aint Do Tiananmen Square I Did   
+freq                                          1603   
+
+                                                     text  Length emotion  \
+count                                              551474  551443  551443   
+unique                                             497526    1275      47   
+top     [Hook] Crazy cash, sick cash Tell me, what am ...    3:14     joy   
+freq                                                 1603    4675  208991   
+
+          Genre        Album      Release Date     Key   Tempo Loudness (db)  \
+count    551443       551391            551443  551443  551443        551443   
+unique     3131       154679             14332      58     361          3779   
+top     hip hop  685 (Remix)  1st January 2006   C Maj     120          -6db   
+freq     262056         1603              2730   47745   16650         10611   
+
+       Time signature Explicit  Popularity  Energy  Danceability  \
+count          551435   551443      551443  551443        551443   
+unique             38       36         223     234           220   
+top             4-Apr       No          27      72            60   
+freq           501019   389354       13433    9965         12284   
+
+        Positiveness  Speechiness  Liveness  Acousticness  Instrumentalness  \
+count         551443       551443    551443        551443            551443   
+unique           232          220       232           232               229   
+top               34            3        11             0                 0   
+freq            8965       108567     50115         81982            403315   
+
+        Good for Party  Good for Work/Study  Good for Relaxation/Meditation  \
+count           551443               551443                          551443   
+unique              36                   35                              36   
+top                  0                    0                               0   
+freq            493905               486962                          511479   
+
+        Good for Exercise  Good for Running  Good for Yoga/Stretching  \
+count              551443            551443                    551443   
+unique                 34                35                        34   
+top                     0                 0                         0   
+freq               428911            500722                    516391   
+
+        Good for Driving  Good for Social Gatherings  \
+count             551443                      551443   
+unique                33                          34   
+top                    0                           0   
+freq              499039                      520509   
+
+        Good for Morning Routine                      Similar Artist 1  \
+count                     551443                                551443   
+unique                        32                                 90310   
+top                            0  Victor J Sefo,Lisi,Mwayz,Sefos.Beats   
+freq                      494021                                  1610   
+
+                 Similar Song 1  Similarity Score 1  \
+count                    551424            551443.0   
+unique                   218728            362005.0   
+top     MAD vs G2 | 2021 Summer                 1.0   
+freq                       1603             70216.0   
+
+                            Similar Artist 2 Similar Song 2  \
+count                                 551443         551423   
+unique                                 87561         207675   
+top     Victor J Sefo,Lisi,Mwayz,Sefos.Beats   Hit the Road   
+freq                                    1615           1603   
+
+        Similarity Score 2                      Similar Artist 3  \
+count             551443.0                                551443   
+unique            420889.0                                 86989   
+top                    1.0  Victor J Sefo,Lisi,Mwayz,Sefos.Beats   
+freq               46249.0                                  1618   
+
+                Similar Song 3  Similarity Score 3  
+count                   551438            551442.0  
+unique                  205997            438152.0  
+top     J. Cole No Role Modelz                 1.0  
+freq                      1603             37163.0  
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 551479 entries, 0 to 551478
+Data columns (total 39 columns):
+ #   Column                          Non-Null Count   Dtype 
+---  ------                          --------------   ----- 
+ 0   Artist(s)                       551479 non-null  object
+ 1   song                            551462 non-null  object
+ 2   text                            551474 non-null  object
+ 3   Length                          551443 non-null  object
+ 4   emotion                         551443 non-null  object
+ 5   Genre                           551443 non-null  object
+ 6   Album                           551391 non-null  object
+ 7   Release Date                    551443 non-null  object
+ 8   Key                             551443 non-null  object
+ 9   Tempo                           551443 non-null  object
+ 10  Loudness (db)                   551443 non-null  object
+ 11  Time signature                  551435 non-null  object
+ 12  Explicit                        551443 non-null  object
+ 13  Popularity                      551443 non-null  object
+ 14  Energy                          551443 non-null  object
+ 15  Danceability                    551443 non-null  object
+ 16  Positiveness                    551443 non-null  object
+ 17  Speechiness                     551443 non-null  object
+ 18  Liveness                        551443 non-null  object
+ 19  Acousticness                    551443 non-null  object
+ 20  Instrumentalness                551443 non-null  object
+ 21  Good for Party                  551443 non-null  object
+ 22  Good for Work/Study             551443 non-null  object
+ 23  Good for Relaxation/Meditation  551443 non-null  object
+ 24  Good for Exercise               551443 non-null  object
+ 25  Good for Running                551443 non-null  object
+ 26  Good for Yoga/Stretching        551443 non-null  object
+ 27  Good for Driving                551443 non-null  object
+ 28  Good for Social Gatherings      551443 non-null  object
+ 29  Good for Morning Routine        551443 non-null  object
+ 30  Similar Artist 1                551443 non-null  object
+ 31  Similar Song 1                  551424 non-null  object
+ 32  Similarity Score 1              551443 non-null  object
+ 33  Similar Artist 2                551443 non-null  object
+ 34  Similar Song 2                  551423 non-null  object
+ 35  Similarity Score 2              551443 non-null  object
+ 36  Similar Artist 3                551443 non-null  object
+ 37  Similar Song 3                  551438 non-null  object
+ 38  Similarity Score 3              551442 non-null  object
+dtypes: object(39)
+memory usage: 164.1+ MB</code></pre>
+</div>
+</div>
+<p>df: 1,048,575 entries 4 columns</p>
+<p>df2: 551,479 entries 39 columns</p>
+<div id="61de192e" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normalize(text):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(text):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">""</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> <span class="bu">str</span>(text).lower()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="pp">[^a-z0-9 ]</span><span class="vs">'</span>, <span class="st">' '</span>, text)   <span class="co"># keep alphanumerics</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="dv">\s</span><span class="op">+</span><span class="vs">'</span>, <span class="st">' '</span>, text).strip()</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> text</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'artist_norm'</span>] <span class="op">=</span> df[<span class="st">'artistname'</span>].<span class="bu">apply</span>(normalize)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'track_norm'</span>]  <span class="op">=</span> df[<span class="st">'trackname'</span>].<span class="bu">apply</span>(normalize)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>df2[<span class="st">'artist_norm'</span>] <span class="op">=</span> df2[<span class="st">'Artist(s)'</span>].<span class="bu">apply</span>(normalize)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>df2[<span class="st">'track_norm'</span>]  <span class="op">=</span> df2[<span class="st">'song'</span>].<span class="bu">apply</span>(normalize)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>merged_exact <span class="op">=</span> pd.merge(</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    df, df2,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span>[<span class="st">'artist_norm'</span>,<span class="st">'track_norm'</span>],</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">'inner'</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="b89b2736" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>merged_exact.info()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df_count <span class="op">=</span> <span class="dv">1048575</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df2_count <span class="op">=</span> <span class="dv">551479</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>merged_count <span class="op">=</span> <span class="dv">389510</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>pct_df <span class="op">=</span> merged_count <span class="op">/</span> df_count <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>pct_df2 <span class="op">=</span> merged_count <span class="op">/</span> df2_count <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percent of df merged: </span><span class="sc">{</span>pct_df<span class="sc">:.1f}</span><span class="ss">%"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#print(f"Percent of df2 merged: {pct_df2:.1f}%")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 389510 entries, 0 to 389509
+Data columns (total 45 columns):
+ #   Column                          Non-Null Count   Dtype 
+---  ------                          --------------   ----- 
+ 0   user_id                         389510 non-null  object
+ 1   artistname                      389510 non-null  object
+ 2   trackname                       389510 non-null  object
+ 3   playlistname                    389510 non-null  object
+ 4   artist_norm                     389510 non-null  object
+ 5   track_norm                      389510 non-null  object
+ 6   Artist(s)                       389510 non-null  object
+ 7   song                            389510 non-null  object
+ 8   text                            389510 non-null  object
+ 9   Length                          389510 non-null  object
+ 10  emotion                         389510 non-null  object
+ 11  Genre                           389510 non-null  object
+ 12  Album                           389510 non-null  object
+ 13  Release Date                    389510 non-null  object
+ 14  Key                             389510 non-null  object
+ 15  Tempo                           389510 non-null  object
+ 16  Loudness (db)                   389510 non-null  object
+ 17  Time signature                  389508 non-null  object
+ 18  Explicit                        389510 non-null  object
+ 19  Popularity                      389510 non-null  object
+ 20  Energy                          389510 non-null  object
+ 21  Danceability                    389510 non-null  object
+ 22  Positiveness                    389510 non-null  object
+ 23  Speechiness                     389510 non-null  object
+ 24  Liveness                        389510 non-null  object
+ 25  Acousticness                    389510 non-null  object
+ 26  Instrumentalness                389510 non-null  object
+ 27  Good for Party                  389510 non-null  object
+ 28  Good for Work/Study             389510 non-null  object
+ 29  Good for Relaxation/Meditation  389510 non-null  object
+ 30  Good for Exercise               389510 non-null  object
+ 31  Good for Running                389510 non-null  object
+ 32  Good for Yoga/Stretching        389510 non-null  object
+ 33  Good for Driving                389510 non-null  object
+ 34  Good for Social Gatherings      389510 non-null  object
+ 35  Good for Morning Routine        389510 non-null  object
+ 36  Similar Artist 1                389510 non-null  object
+ 37  Similar Song 1                  389501 non-null  object
+ 38  Similarity Score 1              389510 non-null  object
+ 39  Similar Artist 2                389510 non-null  object
+ 40  Similar Song 2                  389507 non-null  object
+ 41  Similarity Score 2              389510 non-null  object
+ 42  Similar Artist 3                389510 non-null  object
+ 43  Similar Song 3                  389510 non-null  object
+ 44  Similarity Score 3              389510 non-null  object
+dtypes: object(45)
+memory usage: 133.7+ MB
+Percent of df merged: 37.1%
+Percent of df2 merged: 70.6%</code></pre>
+</div>
+</div>
+<div id="966af06f" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>merged_exact</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">user_id</th>
+<th data-quarto-table-cell-role="th">artistname</th>
+<th data-quarto-table-cell-role="th">trackname</th>
+<th data-quarto-table-cell-role="th">playlistname</th>
+<th data-quarto-table-cell-role="th">artist_norm</th>
+<th data-quarto-table-cell-role="th">track_norm</th>
+<th data-quarto-table-cell-role="th">Artist(s)</th>
+<th data-quarto-table-cell-role="th">song</th>
+<th data-quarto-table-cell-role="th">text</th>
+<th data-quarto-table-cell-role="th">Length</th>
+<th data-quarto-table-cell-role="th">emotion</th>
+<th data-quarto-table-cell-role="th">Genre</th>
+<th data-quarto-table-cell-role="th">Album</th>
+<th data-quarto-table-cell-role="th">Release Date</th>
+<th data-quarto-table-cell-role="th">Key</th>
+<th data-quarto-table-cell-role="th">Tempo</th>
+<th data-quarto-table-cell-role="th">Loudness (db)</th>
+<th data-quarto-table-cell-role="th">Time signature</th>
+<th data-quarto-table-cell-role="th">Explicit</th>
+<th data-quarto-table-cell-role="th">Popularity</th>
+<th data-quarto-table-cell-role="th">Energy</th>
+<th data-quarto-table-cell-role="th">Danceability</th>
+<th data-quarto-table-cell-role="th">Positiveness</th>
+<th data-quarto-table-cell-role="th">Speechiness</th>
+<th data-quarto-table-cell-role="th">Liveness</th>
+<th data-quarto-table-cell-role="th">Acousticness</th>
+<th data-quarto-table-cell-role="th">Instrumentalness</th>
+<th data-quarto-table-cell-role="th">Good for Party</th>
+<th data-quarto-table-cell-role="th">Good for Work/Study</th>
+<th data-quarto-table-cell-role="th">Good for Relaxation/Meditation</th>
+<th data-quarto-table-cell-role="th">Good for Exercise</th>
+<th data-quarto-table-cell-role="th">Good for Running</th>
+<th data-quarto-table-cell-role="th">Good for Yoga/Stretching</th>
+<th data-quarto-table-cell-role="th">Good for Driving</th>
+<th data-quarto-table-cell-role="th">Good for Social Gatherings</th>
+<th data-quarto-table-cell-role="th">Good for Morning Routine</th>
+<th data-quarto-table-cell-role="th">Similar Artist 1</th>
+<th data-quarto-table-cell-role="th">Similar Song 1</th>
+<th data-quarto-table-cell-role="th">Similarity Score 1</th>
+<th data-quarto-table-cell-role="th">Similar Artist 2</th>
+<th data-quarto-table-cell-role="th">Similar Song 2</th>
+<th data-quarto-table-cell-role="th">Similarity Score 2</th>
+<th data-quarto-table-cell-role="th">Similar Artist 3</th>
+<th data-quarto-table-cell-role="th">Similar Song 3</th>
+<th data-quarto-table-cell-role="th">Similarity Score 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>9cc0cfd4d7d7885102480dd99e7a90d6</td>
+<td>Elvis Costello</td>
+<td>(The Angels Wanna Wear My) Red Shoes</td>
+<td>HARD ROCK 2010</td>
+<td>elvis costello</td>
+<td>the angels wanna wear my red shoes</td>
+<td>Elvis Costello</td>
+<td>The Angels Wanna Wear My Red Shoes</td>
+<td>[Chorus] Oh, I used to be disgusted And now, I...</td>
+<td>2:47</td>
+<td>sadness</td>
+<td>folk,country,new wave</td>
+<td>My Aim Is True</td>
+<td>22nd July 1977</td>
+<td>E Maj</td>
+<td>135</td>
+<td>-10db</td>
+<td>4-Apr</td>
+<td>No</td>
+<td>38</td>
+<td>64</td>
+<td>58</td>
+<td>90</td>
+<td>5</td>
+<td>23</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>The Association</td>
+<td>Along Comes Mary</td>
+<td>0.983201</td>
+<td>The Rolling Stones</td>
+<td>Flight 505</td>
+<td>0.981561</td>
+<td>Hurriganes</td>
+<td>My Only One</td>
+<td>0.979894</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>9cc0cfd4d7d7885102480dd99e7a90d6</td>
+<td>Elvis Costello &amp; The Attractions</td>
+<td>Accidents Will Happen</td>
+<td>HARD ROCK 2010</td>
+<td>elvis costello the attractions</td>
+<td>accidents will happen</td>
+<td>Elvis Costello &amp; The Attractions</td>
+<td>Accidents Will Happen</td>
+<td>[Verse 1] Oh, I just don't know where to begin...</td>
+<td>3:01</td>
+<td>sadness</td>
+<td>folk,country,new wave</td>
+<td>Armed Forces (Super Deluxe Edition)</td>
+<td>5th January 1979</td>
+<td>C Maj</td>
+<td>120</td>
+<td>-11.12db</td>
+<td>4-Apr</td>
+<td>No</td>
+<td>37</td>
+<td>60</td>
+<td>61</td>
+<td>74</td>
+<td>3</td>
+<td>28</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>Adam Green</td>
+<td>Friends of Mine</td>
+<td>0.981811</td>
+<td>MAY-A</td>
+<td>Time I Love To Waste</td>
+<td>0.979441</td>
+<td>KOPPS</td>
+<td>Dumb</td>
+<td>0.975395</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>9cc0cfd4d7d7885102480dd99e7a90d6</td>
+<td>Elvis Costello</td>
+<td>Alison</td>
+<td>HARD ROCK 2010</td>
+<td>elvis costello</td>
+<td>alison</td>
+<td>Elvis Costello</td>
+<td>Alison</td>
+<td>[Verse 1] Oh, it's so funny to be seeing you a...</td>
+<td>3:24</td>
+<td>surprise</td>
+<td>folk,country,new wave</td>
+<td>My Aim Is True</td>
+<td>22nd July 1977</td>
+<td>C# min</td>
+<td>177</td>
+<td>-10.79db</td>
+<td>4-Apr</td>
+<td>No</td>
+<td>51</td>
+<td>32</td>
+<td>56</td>
+<td>38</td>
+<td>4</td>
+<td>11</td>
+<td>74</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>Alison Krauss &amp; Union Station</td>
+<td>When You Say Nothing At All</td>
+<td>0.995125</td>
+<td>Restless Heart</td>
+<td>Ill Still Be Loving You</td>
+<td>0.994933</td>
+<td>Cavetown</td>
+<td>888</td>
+<td>0.992878</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>9cc0cfd4d7d7885102480dd99e7a90d6</td>
+<td>Paul McCartney</td>
+<td>Dance Tonight</td>
+<td>HARD ROCK 2010</td>
+<td>paul mccartney</td>
+<td>dance tonight</td>
+<td>Paul McCartney</td>
+<td>Dance Tonight</td>
+<td>[Refrain] Everybody gonna dance tonight Everyb...</td>
+<td>2:54</td>
+<td>joy</td>
+<td>pop rock,folk,pop</td>
+<td>Memory Almost Full</td>
+<td>4th June 2007</td>
+<td>F Maj</td>
+<td>171</td>
+<td>-2.54db</td>
+<td>4-Apr</td>
+<td>No</td>
+<td>35</td>
+<td>89</td>
+<td>53</td>
+<td>93</td>
+<td>4</td>
+<td>16</td>
+<td>8</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>Elemeno P</td>
+<td>Chloe Edit</td>
+<td>0.994229</td>
+<td>Elemeno P</td>
+<td>Seventeen</td>
+<td>0.993897</td>
+<td>Elemeno P</td>
+<td>Verona</td>
+<td>0.993897</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>9cc0cfd4d7d7885102480dd99e7a90d6</td>
+<td>Crowded House</td>
+<td>Don't Dream It's Over</td>
+<td>HARD ROCK 2010</td>
+<td>crowded house</td>
+<td>don t dream it s over</td>
+<td>Crowded House</td>
+<td>Don't Dream It's Over</td>
+<td>There is freedom within, there is freedom with...</td>
+<td>3:58</td>
+<td>joy</td>
+<td>rock,pop,alternative rock</td>
+<td>Crowded House (Deluxe)</td>
+<td>1st August 1986</td>
+<td>G# Maj</td>
+<td>82</td>
+<td>-6.99db</td>
+<td>4-Apr</td>
+<td>No</td>
+<td>71</td>
+<td>75</td>
+<td>45</td>
+<td>36</td>
+<td>4</td>
+<td>8</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>Crowded House</td>
+<td>Dont Dream Its Over</td>
+<td>0.999674</td>
+<td>The Neighbourhood</td>
+<td>A Little Death</td>
+<td>0.983522</td>
+<td>Egzod,Maestro Chives,Neoni</td>
+<td>The Revolution</td>
+<td>0.979075</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">389505</th>
+<td>576820c2da503406e16ae9782b3c0e4c</td>
+<td>Susto</td>
+<td>Dream Girl</td>
+<td>Current Office Playlist - regularly updated</td>
+<td>susto</td>
+<td>dream girl</td>
+<td>Susto</td>
+<td>Dream Girl</td>
+<td>Lately I've been having the strangest dreams I...</td>
+<td>3:40</td>
+<td>fear</td>
+<td>hip hop</td>
+<td>Susto</td>
+<td>1st April 2014</td>
+<td>A Maj</td>
+<td>140</td>
+<td>-7.39db</td>
+<td>4-Apr</td>
+<td>No</td>
+<td>16</td>
+<td>58</td>
+<td>60</td>
+<td>32</td>
+<td>3</td>
+<td>11</td>
+<td>55</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>Amy Grant,James Taylor</td>
+<td>Here</td>
+<td>0.989282</td>
+<td>Vonda Shepard</td>
+<td>This Is Crazy Now</td>
+<td>0.988307</td>
+<td>Faith Richards</td>
+<td>Blue</td>
+<td>0.98816</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">389506</th>
+<td>576820c2da503406e16ae9782b3c0e4c</td>
+<td>Billy Joe Shaver</td>
+<td>Live Forever</td>
+<td>Current Office Playlist - regularly updated</td>
+<td>billy joe shaver</td>
+<td>live forever</td>
+<td>Billy Joe Shaver</td>
+<td>Live Forever</td>
+<td>We rollin'? One, two, three I'm gonna live fo...</td>
+<td>2:49</td>
+<td>sadness</td>
+<td>country</td>
+<td>The Essential Billy Joe Shaver</td>
+<td>2nd October 2015</td>
+<td>G Maj</td>
+<td>105</td>
+<td>-15.19db</td>
+<td>4-Apr</td>
+<td>No</td>
+<td>20</td>
+<td>45</td>
+<td>66</td>
+<td>89</td>
+<td>3</td>
+<td>33</td>
+<td>41</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>Panopticon</td>
+<td>Which Side Are You On?</td>
+<td>0.97753</td>
+<td>Roy Clark</td>
+<td>I Never Picked Cotton</td>
+<td>0.972329</td>
+<td>Tom Jones</td>
+<td>Untrue</td>
+<td>0.972178</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">389507</th>
+<td>576820c2da503406e16ae9782b3c0e4c</td>
+<td>Dr. John</td>
+<td>Locked Down</td>
+<td>Current Office Playlist - regularly updated</td>
+<td>dr john</td>
+<td>locked down</td>
+<td>Dr. John</td>
+<td>Locked Down</td>
+<td>Ah, ah, ah, ah Ah, ah, ah, ah Ah, ah, ah, ah A...</td>
+<td>4:59</td>
+<td>sadness</td>
+<td>jazz,folk,blues</td>
+<td>Locked Down</td>
+<td>30th March 2012</td>
+<td>B min</td>
+<td>109</td>
+<td>-6.27db</td>
+<td>4-Apr</td>
+<td>No</td>
+<td>23</td>
+<td>84</td>
+<td>56</td>
+<td>52</td>
+<td>7</td>
+<td>13</td>
+<td>40</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>Dent May</td>
+<td>Eastover Wives</td>
+<td>0.977212</td>
+<td>PVRIS</td>
+<td>Are You Ten Years Ago</td>
+<td>0.955175</td>
+<td>Enrique Iglesias</td>
+<td>Im Your Man</td>
+<td>0.945772</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">389508</th>
+<td>576820c2da503406e16ae9782b3c0e4c</td>
+<td>Punch Brothers</td>
+<td>Magnet</td>
+<td>Current Office Playlist - regularly updated</td>
+<td>punch brothers</td>
+<td>magnet</td>
+<td>Punch Brothers</td>
+<td>Magnet</td>
+<td>[Verse 1] I pinned her to the wall and said I ...</td>
+<td>3:13</td>
+<td>anger</td>
+<td>rock,blues,psychedelic rock</td>
+<td>The Phosphorescent Blues</td>
+<td>23rd January 2015</td>
+<td>A min</td>
+<td>146</td>
+<td>-7.45db</td>
+<td>4-Apr</td>
+<td>No</td>
+<td>27</td>
+<td>70</td>
+<td>68</td>
+<td>83</td>
+<td>4</td>
+<td>16</td>
+<td>17</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>Little Dragon</td>
+<td>Paris</td>
+<td>0.976483</td>
+<td>Nico Collins</td>
+<td>Tug of War</td>
+<td>0.97589</td>
+<td>Danitsa</td>
+<td>Remember Me</td>
+<td>0.974998</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">389509</th>
+<td>576820c2da503406e16ae9782b3c0e4c</td>
+<td>Curtis Harding</td>
+<td>Next Time</td>
+<td>Current Office Playlist - regularly updated</td>
+<td>curtis harding</td>
+<td>next time</td>
+<td>Curtis Harding</td>
+<td>Next Time</td>
+<td>[Verse 1] We could've went to heaven Put you i...</td>
+<td>4:30</td>
+<td>sadness</td>
+<td>soul</td>
+<td>Soul Power</td>
+<td>19th January 2015</td>
+<td>A min</td>
+<td>125</td>
+<td>-10.5db</td>
+<td>4-Apr</td>
+<td>No</td>
+<td>44</td>
+<td>50</td>
+<td>68</td>
+<td>91</td>
+<td>3</td>
+<td>8</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>a-ha</td>
+<td>The Blood That Moves the Body</td>
+<td>0.983758</td>
+<td>James Reyne</td>
+<td>The Upgrade Pt. II</td>
+<td>0.976229</td>
+<td>China Crisis</td>
+<td>Diggin to China</td>
+<td>0.975139</td>
+</tr>
+</tbody>
+</table>
+
+<p>389510 rows × 45 columns</p>
+</div>
+</div>
+</div>
+<p>merged: 389,510 entries 45 columns</p>
+<div id="05658084" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rapidfuzz <span class="im">import</span> process, fuzz</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> []</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> artist <span class="kw">in</span> df[<span class="st">'artist_norm'</span>].unique():</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    left <span class="op">=</span> df[df[<span class="st">'artist_norm'</span>] <span class="op">==</span> artist]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    right <span class="op">=</span> df2[df2[<span class="st">'artist_norm'</span>] <span class="op">==</span> artist]</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, track <span class="kw">in</span> left[<span class="st">'track_norm'</span>].items():</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        match <span class="op">=</span> process.extractOne(</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>            track, right[<span class="st">'track_norm'</span>],</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            scorer<span class="op">=</span>fuzz.token_sort_ratio</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> match <span class="kw">and</span> match[<span class="dv">1</span>] <span class="op">&gt;</span> <span class="dv">70</span>:  <span class="co"># similarity threshold</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>            <span class="co"># find the index of the matched track in df2</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>            j <span class="op">=</span> right[right[<span class="st">'track_norm'</span>] <span class="op">==</span> match[<span class="dv">0</span>]].index[<span class="dv">0</span>]</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>            matches.append((i, j, match[<span class="dv">1</span>]))  <span class="co"># store indices + score</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert matches to DataFrame</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>matches_df <span class="op">=</span> pd.DataFrame(matches, columns<span class="op">=</span>[<span class="st">'df_index'</span>,<span class="st">'df2_index'</span>,<span class="st">'score'</span>])</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Join back to full rows</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>fuzzy_merged <span class="op">=</span> matches_df.merge(df, left_on<span class="op">=</span><span class="st">'df_index'</span>, right_index<span class="op">=</span><span class="va">True</span>)<span class="op">\</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>                         .merge(df2, left_on<span class="op">=</span><span class="st">'df2_index'</span>, right_index<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>                                suffixes<span class="op">=</span>(<span class="st">'_df'</span>,<span class="st">'_df2'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[2], line 5</span>
+<span class="ansi-green-fg ansi-bold">      1</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">rapidfuzz</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> process, fuzz
+<span class="ansi-green-fg ansi-bold">      3</span> matches <span style="color:rgb(98,98,98)">=</span> []
+<span class="ansi-green-fg">----&gt; 5</span> <span style="font-weight:bold;color:rgb(0,135,0)">for</span> artist <span style="font-weight:bold;color:rgb(175,0,255)">in</span> df[<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">artist_norm</span><span style="color:rgb(175,0,0)">'</span>]<span style="color:rgb(98,98,98)">.</span>unique():
+<span class="ansi-green-fg ansi-bold">      6</span>     left <span style="color:rgb(98,98,98)">=</span> df[df[<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">artist_norm</span><span style="color:rgb(175,0,0)">'</span>] <span style="color:rgb(98,98,98)">==</span> artist]
+<span class="ansi-green-fg ansi-bold">      7</span>     right <span style="color:rgb(98,98,98)">=</span> df2[df2[<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">artist_norm</span><span style="color:rgb(175,0,0)">'</span>] <span style="color:rgb(98,98,98)">==</span> artist]
+
+<span class="ansi-red-fg">NameError</span>: name 'df' is not defined</pre>
+</div>
+</div>
+</div>
+<div id="293c7f8d" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#matches_df.sort_values(by='user_id', ascending=False)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>fuzzy_merged.sort_values(by<span class="op">=</span><span class="st">'score'</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[1], line 2</span>
+<span class="ansi-green-fg ansi-bold">      1</span> <span style="font-style:italic;color:rgb(95,135,135)">#matches_df.sort_values(by='user_id', ascending=False)</span>
+<span class="ansi-green-fg">----&gt; 2</span> fuzzy_merged<span style="color:rgb(98,98,98)">.</span>sort_values(by<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">score</span><span style="color:rgb(175,0,0)">'</span>)
+
+<span class="ansi-red-fg">NameError</span>: name 'fuzzy_merged' is not defined</pre>
+</div>
+</div>
+</div>
+<p>merged: 389,510 entries 45 columns</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
