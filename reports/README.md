@@ -1,3 +1,0 @@
-# Reports
-
-Contains generated reports
