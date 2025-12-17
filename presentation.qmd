@@ -1,6 +1,9 @@
 ---
 title: "Music Recommendor System"
-subtitle: "INFO 523 - Summer 2025 - Final Project"
+subtitle: |
+  INFO 523 - Summer 2025 - Final Project
+  
+  <a href="https://arizona.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f258cdc6-e010-414c-881c-b3b500530a60" style="color: black; text-decoration: underline;"> Presentation Recording</a>
 author: "Neyda Carrillo, Brandon Knox, Mike Stanton"
 title-slide-attributes:
   data-background-image: images/watercolour_sys02_img34_teacup-ocean.jpg
@@ -16,8 +19,3 @@ jupyter: python3
 execute:
   echo: false
 ---
-
-## Presentation Link
-
-[Presentation Reocording](https://arizona.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f258cdc6-e010-414c-881c-b3b500530a60)
-
