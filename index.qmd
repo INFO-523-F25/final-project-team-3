@@ -26,6 +26,21 @@ The field of data science has many applications, including music recommendation 
 
 [Video Link (hosted on Panopto)](https://arizona.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f258cdc6-e010-414c-881c-b3b500530a60)
 
+## Can we identify distinct groups of artists who are enjoyed by similar listeners?
+
+### Modeling Approach
+Identifying distinct groups of artists who are enjoyed by similar listeners was tackled with unsupervised learning techniques. Our data had a wide variety of playlist names, since users can choose whatever they would like to call them, and genres were mixed and varied as well. So we vectorized these features using term frequency / inverse document frequency, or tf-idf. Kmeans clustering was then applied, resulting in a k-optimal 35 unique playlist groups. These groups varied from playlists with the name “baby” in them to certain years, like 2012. Clustering resulted in just 12 genres, although one of them was quite large and varied. User and artist names were label-encoded, and the remaining features were scaled so that kmeans could be applied to the entire dataset. An optimal k value of 4 was found, resulting in the four groups.
+
+### Interpreting Clusters
+We then looked at the median values of different qualities of music for different Spotify listeners. Cluster 0 listens to artists that are easy to dance to and have positive sounds. Cluster 1 favors low-energy, acoustic tunes, and is the least attracted to popular songs. Cluster 2 is second highest when it comes to energetic artists, but the least likely to dance. Cluster 3 listens to popular music, has the highest preference for energetic artists, and appreciates positive tunes.
+
+Other features focused on environments where Spotify users may listen to music. Cluster 0 is defined by their morning routine and driving listening habits, while cluster 1 prefers listening to artists that are good for relaxation, yoga, and work study. Cluster 2 has pretty small scores for all of these features, but shows some preference towards artists that have music for morning routine and work study. Cluster 3 listens to music that is good for parties, and listens a little for morning routine.
+
+When it comes to song length, most groups prefer songs around 3 minutes and 45 seconds. Cluster 2 prefers longer songs than the other three clusters, but they’re all pretty close. When it comes to tempo of music, measured in beats per minute, clusters 0 and 1 prefer slightly slower beats than clusters 2 and 3.
+
+### Key Findings and Future Work
+While we were able to identify distinct groupings of artists and listeners, there is room for improvement. Clustering groups could be improved with different text vectorization techniques like context-aware​ embeddings and more flexible clustering algorithms such as DBSCAN and gaussian mixture models could increase the quality and distribution of the groups.
+
 ## Can we predict what songs a user will add to a playlist based on their listening activity and the listening activity of others?
 
 ### Problem Statement/ Research Question 
