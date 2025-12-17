@@ -7,7 +7,7 @@ jupyter: python3
 
 This project was developed by **Team 3** For [INFO 523 - Data Mining and Discovery](https://datamineaz.org/) at the University of Arizona, taught by Dr. Greg Chism. The team is comprised of the following team members.
 
--   Neyda Carrillo: Completing a Masters of Data Science in 2025
+-   Neyda Carrillo: Currently working as a Data Coordinator, Completing a Masters of Data Science in 2025
 
 -   Brandon Knox: Enjoys computer science, completing a Masters of Data Science in 2026
 
