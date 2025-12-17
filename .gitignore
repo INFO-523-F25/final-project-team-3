@@ -9,3 +9,4 @@
 spotify_dataset.csv
 spotify_dataset_2.csv
 clean_data.csv
+**/*.quarto_ipynb
