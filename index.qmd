@@ -24,30 +24,30 @@ Add project abstract here.
 
 ## Can we predict what songs a user will add to a playlist based on their listening activity and the listening activity of others?
 
-Problem Statement/ Research Question 
+### Problem Statement/ Research Question 
 
 There can be some inherent limitations with content filtering recommender systems. It can be difficult to thoroughly tag songs with comprehensive metadata. It can also be difficult to collect comprehensive listener sentiment data. Therefore it is useful to explore if A. we can recommend songs in a way that does not rely on substantial metadata and B. we can provide relevant song recommendations to the user using only implied sentiment from their normal listening activity (as opposed to asking them to rate songs on a scale of 1-5).
 
-Problem Formulation and Collaborative Filtering Overview
+### Problem Formulation and Collaborative Filtering Overview
 
 The primary value in recommender systems is to show the user something they might enjoy but may not have listened to otherwise, not necessarily to predict their exact behavior. For this reason, the question we are truly addressing is: Can we recommend personalized and relevant songs to a user based on their listening behavior and the listening behavior of others? 
 
 We can say that if a user added a song to a playlist, they “like” that song. Some users share similar tastes in music, so we can recommend music to one person based on the liked music of others. This can be accomplished using Implicit Alternating Least Squares.
 
-Preprocessing
+### Preprocessing
 
 To prepare the data first it is necessary to clean the artist names and song names for uniformity (it needs to be clear that “Twelve Days of Christmas” is the same as “12 Days of Christmas”), and also concatenate the artist name with the song title (because different songs can have the same name). We also need to remove songs and users with too few interactions (in this case \< 5 interactions), because this could potentially impede the model as “noise”. For validation, it is necessary to remove 20% of interactions per user and set them aside for testing. On the remaining 80% training data, we applied log scaling because we found the model performed better when we gave less influence to instances where a user added the same song to 2,3 or 4 playlists. We also applied BM25 weighting to dampen extreme play counts and reward rare song selections. The final prepared training data is a user-item interaction matrix, weighted and scaled without the playlist names or the artist names.
 
-Model Details and Explanation
+### Model Details and Explanation
 
 Implicit Alternating Least Squares maps each song and user in multidimensional space and alternates between keeping the user vectors fixed while solving for the song vectors, and keeping the song vectors fixed while solving for the user vectors, for a specified number of iterations, at which point the model should converge to a point of low error. Our hyperparameter tuning yielded a configuration with 400 factors (this is the number of mapping dimensions) and 20 iterations (this is the number of alternations) and a regularization of 0.1 to shield against overfitting. We did not adjust the alpha weighting because our BM25 weighting is essentially a more advanced version of this. Our best performing configuration had BM25 values of K1 (saturation) = 1.2 and B (normalization) = .75. The saturation controls the dropoff of how much we should consider a user adding a song 2 times vs 3 times vs 4. The normalization controls how much we should account for highly active users. 
 
-Results
+### Results
 
 We can assess the model using the validation interactions that had been set aside. For this context we focus on Roc AUC at K and MPR (mean percentile rank). A low MPR tells us that the held-out songs were ranked relatively highly by the model for those user-song pairs. And an AUC significantly higher than .5 tells us that there is a greater than 50% chance the user will like our recommendations more than random song choices. 
 
 Our tuned model scored an MPR of 24% and AUC of 60% indicating that while there is room for improvement, the model is clearly recommending songs that are more relevant to the user than if we were to recommend songs randomly. This model also allows us to extract reasoning for song recommendations. When we pick random song recommendations from the trained model and look at the similar songs in the user’s history that resulted in that recommendation we can see some clear examples of relevant and customized recommendations. In some cases we even see instances of a user having an affinity for a certain artist, and the model recommends songs by that artist, even though the artist names were not included in this model. 
 
-Key Findings and Future Work 
+### Key Findings and Future Work 
 
 The obvious shortcoming of Implicit Alternating Least Squares, and collaborative filtering in general is that it requires substantial user-item interactions. For “cold start” users with no prior activity, the model could likely be improved by recommending popular songs until there is enough data for customization. It is also possible we can improve the model by adding song metadata and combining our collaborative filtering approach with content filtering.
