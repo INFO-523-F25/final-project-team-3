@@ -1,11 +1,11 @@
 ---
-title: "Project Title"
+title: "Music Recommendor System"
 subtitle: "INFO 523 - Final Project"
 author: 
   - name: "Neyda Carrillo, Brandon Knox, Mike Stanton"
     affiliations:
       - name: "College of Information Science, University of Arizona"
-description: "Project description"
+description: "An investigation into music recommendation systems, including multiple models to investigate spotify listener habits"
 format:
    html:
     code-tools: true
@@ -20,7 +20,7 @@ jupyter: python3
 
 ## Abstract
 
-Add project abstract here.
+The field of data science has many applications, including music recommendation systems. This project applied the development of multiple machine learning models to identify Spotify listeners music preferences. We analyzed a dataset of over 3 million records, music metadata, listener playlist patterns, and the interactions between these.  A kmeans model was used to cluster similar listeners together to spot broad trends in music preferences.  An implicit alternating least squares model was used to identify recommendations for users based off of similarities of other users selections. An XGBoost classifier was used to predict whether a song would be added to a playlist, based on song elements. These findings could help Spotify listeners identify new music to listen to as well as help with customer retention, keeping customers invested in the music platform as it exposes them to more music they would like.
 
 ## Can we predict what songs a user will add to a playlist based on their listening activity and the listening activity of others?
 
