@@ -21,15 +21,13 @@ jupyter: python3
 
 ## Questions
 
-Can we identify distinct groups of artists who are enjoyed by similar listeners?
+-   Can we identify distinct groups of artists who are enjoyed by similar listeners?
 
-Can we predict which songs a user is likely to add to their playlist based on their listening history and similar users’ behavior?
+-   Can we predict which songs a user is likely to add to their playlist based on their listening history and similar users’ behavior?
 
-```         
-Engineered fields: Song popularity (Number of times a song appears across all playlists) and Collaborative similarity index (Overlap in playlist content between users)
-```
+    -   Engineered fields: Song popularity (Number of times a song appears across all playlists) and Collaborative similarity index (Overlap in playlist content between users)
 
-Can we predict whether a song will be added to a playlist , based on the song elements (key, tempo, genre, and loudness) of the songs that already exist in the playlist?
+-   Can we predict whether a song will be added to a playlist , based on the song elements (key, tempo, genre, and loudness) of the songs that already exist in the playlist?
 
 ## High level goal and expanded description
 
