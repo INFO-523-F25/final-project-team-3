@@ -29,9 +29,11 @@ The field of data science has many applications, including music recommendation 
 ## Can we identify distinct groups of artists who are enjoyed by similar listeners?
 
 ### Modeling Approach
+
 Identifying distinct groups of artists who are enjoyed by similar listeners was tackled with unsupervised learning techniques. Our data had a wide variety of playlist names, since users can choose whatever they would like to call them, and genres were mixed and varied as well. So we vectorized these features using term frequency / inverse document frequency, or tf-idf. Kmeans clustering was then applied, resulting in a k-optimal 35 unique playlist groups. These groups varied from playlists with the name “baby” in them to certain years, like 2012. Clustering resulted in just 12 genres, although one of them was quite large and varied. User and artist names were label-encoded, and the remaining features were scaled so that kmeans could be applied to the entire dataset. An optimal k value of 4 was found, resulting in the four groups.
 
 ### Interpreting Clusters
+
 We then looked at the median values of different qualities of music for different Spotify listeners. Cluster 0 listens to artists that are easy to dance to and have positive sounds. Cluster 1 favors low-energy, acoustic tunes, and is the least attracted to popular songs. Cluster 2 is second highest when it comes to energetic artists, but the least likely to dance. Cluster 3 listens to popular music, has the highest preference for energetic artists, and appreciates positive tunes.
 
 Other features focused on environments where Spotify users may listen to music. Cluster 0 is defined by their morning routine and driving listening habits, while cluster 1 prefers listening to artists that are good for relaxation, yoga, and work study. Cluster 2 has pretty small scores for all of these features, but shows some preference towards artists that have music for morning routine and work study. Cluster 3 listens to music that is good for parties, and listens a little for morning routine.
@@ -39,6 +41,7 @@ Other features focused on environments where Spotify users may listen to music. 
 When it comes to song length, most groups prefer songs around 3 minutes and 45 seconds. Cluster 2 prefers longer songs than the other three clusters, but they’re all pretty close. When it comes to tempo of music, measured in beats per minute, clusters 0 and 1 prefer slightly slower beats than clusters 2 and 3.
 
 ### Key Findings and Future Work
+
 While we were able to identify distinct groupings of artists and listeners, there is room for improvement. Clustering groups could be improved with different text vectorization techniques like context-aware​ embeddings and more flexible clustering algorithms such as DBSCAN and gaussian mixture models could increase the quality and distribution of the groups.
 
 ## Can we predict what songs a user will add to a playlist based on their listening activity and the listening activity of others?
@@ -70,3 +73,19 @@ Our tuned model scored an MPR of 24% and AUC of 60% indicating that while there 
 ### Key Findings and Future Work 
 
 The obvious shortcoming of Implicit Alternating Least Squares, and collaborative filtering in general is that it requires substantial user-item interactions. For “cold start” users with no prior activity, the model could likely be improved by recommending popular songs until there is enough data for customization. It is also possible we can improve the model by adding song metadata and combining our collaborative filtering approach with content filtering.
+
+## Can we predict whether a song will be added to a playlist , based on the song elements (key, tempo, genre, and loudness) of the songs that already exist in the playlist?
+
+### Preprocessing
+
+The dataset was constructed by merging user playlist information with song metadata containing tempo, key, genre, and loudness. Several preprocessing steps were required to ensure consistency and usability. Tempo values often appeared with "bpm" suffixes and loudness values with "db," so both were cleaned to numeric form. Missing values were imputed with column means, and tempo and loudness were standardized using StandardScaler to place them on comparable scales. Genre and key, being categorical, were converted into numeric form through label encoding. To capture playlist context, aggregates were engineered at the playlist level, including average tempo and loudness as well as dominant genre and key. These aggregates were merged back into the song‑level data, enabling direct comparison between each candidate song and the overall playlist profile. From this, similarity features such as tempo_diff and loudness_diff were derived to quantify how far a song deviates from the playlist's averages. \### Model Details
+
+The classification task was implemented using an XGBoost model, a gradient‑boosted decision tree algorithm well‑suited for tabular data with mixed feature types. The model was trained on ten features: the four raw song attributes (tempo, key, genre, loudness), the four playlist‑level aggregates (average tempo, average loudness, dominant genre, dominant key), and the two similarity measures (tempo_diff and loudness_diff). To ensure the model learned from both positive and negative examples, negative sampling was introduced by randomly selecting songs not present in each playlist and labeling them as "not added." This balanced the dataset and allowed the model to distinguish between songs that belonged and those that did not. By combining raw audio features with contextual similarity measures, the model explored the research question of whether playlist membership could be predicted from song elements and playlist context.
+
+### Results
+
+Evaluation was conducted using a playlist‑level train/test split, with half of each playlist reserved for training and the other half for testing. The model achieved an overall accuracy of 70%, with precision and recall scores around 0.70 for both classes. Recall for added songs was slightly lower than precision, indicating that while the model was reasonably effective at identifying songs that fit, it occasionally missed some positive cases. The ROC curve yielded an AUC of 0.77, confirming strong class separation and suggesting potential for threshold tuning.
+
+### Key Findings and Next Steps
+
+This research demonstrated that even a limited set of audio features, when combined with playlist context and similarity measures, can provide meaningful predictive power for playlist membership. The results showed that playlist‑level aggregates and deviation measures were critical in capturing the idea of "fit," with loudness, genre, and tempo emerging as the strongest predictors. While the model achieved balanced precision and recall, improvements could be made by adjusting classification thresholds to increase recall for added songs. Future work could also explore additional features such as playlist diversity metrics or genre similarity scores to capture less obvious patterns of how playlists are created. Alternative algorithms like LightGBM or CatBoost may offer efficiency gains and improved handling of categorical variables. Finally, doing cross‑validation at the playlist level would give us a better sense of how well the model holds up across different user styles, making sure it works consistently for a variety of listening habits.
